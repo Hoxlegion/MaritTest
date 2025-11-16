@@ -9,7 +9,7 @@ const dutch = {
   },
   frontpage: {
     seo: {
-      title: 'Gratis open-source Marit perceptietest',
+      title: 'Marit perceptietest',
       description:
         'Doe de Marit perceptietest en help haar broertje met zijn presentatie!'
     },

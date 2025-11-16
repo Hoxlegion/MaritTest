@@ -23,7 +23,7 @@ export const siteConfig = {
   name: 'Hoe zie jij Marit Test',
   creator: '@Timo',
   description:
-    'Learn to know yourself better with a free, open-source personality test.',
+    'Wat is jouw perceptie van Marit? Vul de anonieme test in.',
   navItems: [
     {
       label: 'home',
