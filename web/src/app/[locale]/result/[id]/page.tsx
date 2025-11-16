@@ -1,4 +1,4 @@
-import { Report, getTestResult } from '@/actions';
+import { Report, getTestResult, checkAdminAuth } from '@/actions';
 import { Snippet } from '@nextui-org/snippet';
 import { useTranslations } from 'next-intl';
 import { title } from '@/components/primitives';
@@ -10,6 +10,7 @@ import { Alert } from '@/components/alert';
 import { supportEmail } from '@/config/site';
 import { DomainTabs } from './domain-tabs';
 import { Chip } from '@nextui-org/react';
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata({
   params: { locale }
@@ -32,6 +33,12 @@ export default async function ResultPage({
   params,
   searchParams
 }: ResultPageParams) {
+  // Check admin authentication
+  const isAuthenticated = await checkAdminAuth();
+  if (!isAuthenticated) {
+    redirect('/admin');
+  }
+
   let report;
 
   try {

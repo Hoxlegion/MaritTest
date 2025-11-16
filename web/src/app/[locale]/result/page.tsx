@@ -1,15 +1,24 @@
 import { title } from '@/components/primitives';
-import { useTranslations } from 'next-intl';
+import { checkAdminAuth } from '@/actions';
+import { getTranslations } from 'next-intl/server';
 import { GetResultPage } from './get-result';
 import { unstable_setRequestLocale } from 'next-intl/server';
+import { redirect } from 'next/navigation';
 
 interface Props {
   params: { locale: string };
 }
 
-export default function ResultPage({ params: { locale } }: Props) {
+export default async function ResultPage({ params: { locale } }: Props) {
   unstable_setRequestLocale(locale);
-  const t = useTranslations('getResult');
+  
+  // Check admin authentication
+  const isAuthenticated = await checkAdminAuth();
+  if (!isAuthenticated) {
+    redirect('/admin');
+  }
+  
+  const t = await getTranslations('getResult');
 
   return (
     <div className='h-[calc(60vh)]'>

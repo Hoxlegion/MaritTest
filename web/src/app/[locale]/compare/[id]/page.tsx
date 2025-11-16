@@ -1,8 +1,9 @@
 import { base64url } from '@/lib/helpers';
-import { getTestResult } from '@/actions';
+import { getTestResult, checkAdminAuth } from '@/actions';
 import { title } from '@/components/primitives';
 import { DomainComparePage } from './domain';
 import { BarChartCompare } from '@/components/bar-chart-generic';
+import { redirect } from 'next/navigation';
 
 interface ComparePageProps {
   params: {
@@ -18,6 +19,12 @@ type Person = {
 export default async function ComparePage({
   params: { id }
 }: ComparePageProps) {
+  // Check admin authentication
+  const isAuthenticated = await checkAdminAuth();
+  if (!isAuthenticated) {
+    redirect('/admin');
+  }
+
   const people: Person[] = base64url.decode(id);
   const reports = await Promise.all(
     people.map(async (person) => {

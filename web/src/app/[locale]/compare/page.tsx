@@ -1,20 +1,29 @@
 import { title } from '@/components/primitives';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { ComparePeople } from './compare-people';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { Suspense } from 'react';
+import { checkAdminAuth } from '@/actions';
+import { redirect } from 'next/navigation';
 
 interface Props {
   params: { locale: string };
   searchParams: { id: string };
 }
 
-export default function ComparePage({
+export default async function ComparePage({
   params: { locale },
   searchParams: { id }
 }: Props) {
   unstable_setRequestLocale(locale);
-  const t = useTranslations('getCompare');
+  
+  // Check admin authentication
+  const isAuthenticated = await checkAdminAuth();
+  if (!isAuthenticated) {
+    redirect('/admin');
+  }
+
+  const t = await getTranslations('getCompare');
   return (
     <div className='h-[calc(60vh)]'>
       <h1 className={title()}>{t('title')}</h1>

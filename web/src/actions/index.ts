@@ -9,6 +9,7 @@ import generateResult, {
   Language,
   Domain
 } from '@bigfive-org/results';
+import { createSession, verifySession, clearSession } from '@/lib/auth';
 
 const collectionName = process.env.DB_COLLECTION || 'results';
 const resultLanguages = getInfo().languages;
@@ -121,6 +122,7 @@ export async function getAllTestResults(password: string): Promise<AdminTestResu
   // Simple password check - in production, use proper authentication
   const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
   if (password !== adminPassword) {
+    console.log(adminPassword, password);
     throw new Error('Unauthorized');
   }
 
@@ -135,6 +137,58 @@ export async function getAllTestResults(password: string): Promise<AdminTestResu
 
     return results.map(result => ({
       id: result._id.toString(),
+      testId: result.testId,
+      lang: result.lang,
+      dateStamp: result.dateStamp,
+      timeElapsed: result.timeElapsed,
+      answers: result.answers,
+      invalid: result.invalid
+    }));
+  } catch (error) {
+    console.error('Error fetching test results:', error);
+    throw new Error('Failed to fetch test results');
+  }
+}
+
+// Authentication actions
+export async function loginAdmin(password: string): Promise<{ success: boolean; error?: string }> {
+  'use server';
+  
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+  
+  if (password !== adminPassword) {
+    return { success: false, error: 'Invalid password' };
+  }
+  
+  await createSession();
+  return { success: true };
+}
+
+export async function logoutAdmin() {
+  'use server';
+  await clearSession();
+}
+
+export async function checkAdminAuth(): Promise<boolean> {
+  'use server';
+  return await verifySession();
+}
+
+export async function getAllTestResultsProtected(): Promise<AdminTestResult[]> {
+  'use server';
+  
+  const isAuthenticated = await verifySession();
+  if (!isAuthenticated) {
+    throw new Error('Unauthorized');
+  }
+  
+  try {
+    const db = await connectToDatabase();
+    const results = await db.collection(collectionName).find({}).toArray();
+    
+    return results.map(result => ({
+      id: result._id.toString(),
+      scores: calculateScore({ answers: result.answers }),
       testId: result.testId,
       lang: result.lang,
       dateStamp: result.dateStamp,

@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@nextui-org/button';
 import { Input } from '@nextui-org/input';
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@nextui-org/table';
-import { getAllTestResults, AdminTestResult, getTestResult } from '@/actions';
+import { getAllTestResultsProtected, AdminTestResult, getTestResult, loginAdmin, logoutAdmin, checkAdminAuth } from '@/actions';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/modal';
 import calculateScore from '@bigfive-org/score';
 import { Chip } from '@nextui-org/react';
@@ -14,11 +14,36 @@ import { Link } from '@/navigation';
 export default function AdminPage() {
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [results, setResults] = useState<AdminTestResult[]>([]);``
-  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState<AdminTestResult[]>([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [selectedResult, setSelectedResult] = useState<AdminTestResult | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
+
+  useEffect(() => {
+    // Only check auth once
+    if (hasCheckedAuth) return;
+    
+    const checkAuth = async () => {
+      setLoading(true);
+      try {
+        const isAuth = await checkAdminAuth();
+        if (isAuth) {
+          setIsAuthenticated(true);
+          const testResults = await getAllTestResultsProtected();
+          setResults(testResults);
+        }
+      } catch (err) {
+        console.error('Auth check failed:', err);
+      } finally {
+        setLoading(false);
+        setHasCheckedAuth(true);
+      }
+    };
+
+    checkAuth();
+  }, [hasCheckedAuth]);
 
   const handleLogin = async () => {
     if (!password) {
@@ -30,14 +55,26 @@ export default function AdminPage() {
     setError('');
 
     try {
-      const testResults = await getAllTestResults(password);
-      setResults(testResults);
-      setIsAuthenticated(true);
+      const result = await loginAdmin(password);
+      if (result.success) {
+        setIsAuthenticated(true);
+        const testResults = await getAllTestResultsProtected();
+        setResults(testResults);
+      } else {
+        setError(result.error || 'Ongeldig wachtwoord');
+      }
     } catch (err) {
       setError('Ongeldig wachtwoord');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogout = async () => {
+    await logoutAdmin();
+    setIsAuthenticated(false);
+    setPassword('');
+    setResults([]);
   };
 
   const handleViewDetails = (result: AdminTestResult) => {
@@ -138,11 +175,7 @@ export default function AdminPage() {
           <Button 
             color="danger" 
             variant="flat"
-            onPress={() => {
-              setIsAuthenticated(false);
-              setPassword('');
-              setResults([]);
-            }}
+            onPress={handleLogout}
           >
             Uitloggen
           </Button>

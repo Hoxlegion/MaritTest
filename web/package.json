@@ -50,6 +50,7 @@
     "date-fns": "3.6.0",
     "framer-motion": "11.1.7",
     "intl-messageformat": "10.5.11",
+    "jose": "^6.1.2",
     "mongodb": "6.5.0",
     "next": "14.2.3",
     "next-intl": "3.11.3",

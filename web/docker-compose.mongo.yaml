@@ -2,9 +2,15 @@ version: '3.9'
 
 services:
   mongodb:
-    image: mongo
+    image: mongo:7.0
+    container_name: bigfive-mongo-local
     ports:
       - '27017:27017'
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-example}
+      MONGO_INITDB_ROOT_PASSWORD: localpassword123
+    volumes:
+      - mongo_data_local:/data/db
+
+volumes:
+  mongo_data_local:
