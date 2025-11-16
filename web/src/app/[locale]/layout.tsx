@@ -106,10 +106,6 @@ export default async function RootLayout({
             <Footer footerLinks={footerLinks} />
           </div>
         </Providers>
-        <Script
-          src='https://bigfive-test.com/sw.js'
-          strategy='beforeInteractive'
-        />
       </body>
     </html>
   );
