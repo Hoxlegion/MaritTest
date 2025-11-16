@@ -10,7 +10,6 @@ import { basePath, getNavItems, locales, siteConfig } from '@/config/site';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 import useTextDirection from '@/hooks/use-text-direction';
-import Script from 'next/script';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

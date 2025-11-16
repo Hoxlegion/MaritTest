@@ -52,7 +52,7 @@ export const Survey = ({
   useEffect(() => {
     const restoreData = () => {
       if (dataInLocalStorage()) {
-        console.log('Restoring data from local storage');
+        // Restoring data from local storage
         restoreDataFromLocalStorage();
       }
     };
@@ -152,7 +152,7 @@ export const Survey = ({
     });
     localStorage.removeItem('inProgress');
     localStorage.removeItem('b5data');
-    console.log('Test submitted with ID:', result.id);
+    // Test submitted successfully
     // Redirect to thank you page instead of showing results
     router.push('/thankyou');
   }
@@ -180,7 +180,7 @@ export const Survey = ({
   }
 
   function clearDataInLocalStorage() {
-    console.log('Clearing data from local storage');
+    // Clearing data from local storage
     localStorage.removeItem('inProgress');
     localStorage.removeItem('b5data');
     location.reload();
