@@ -11,7 +11,7 @@ const english = {
     seo: {
       title: 'Free anonymous Marit Perception test',
       description:
-        'Take a free, open-source Marit perception test. How do you see Marit? How do Marits friends see Marit?',
+        'Submit your answers to the Marit perception test. How do you see Marit?',
     },
     title: 'Marit Perception Test',
     call_to_action: 'Start',
