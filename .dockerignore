@@ -1,0 +1,15 @@
+web/node_modules
+web/.next
+web/.contentlayer
+web/.env.local
+web/npm-debug.log*
+web/yarn-debug.log*
+web/yarn-error.log*
+.git
+.gitignore
+README.md
+.env
+.nyc_output
+coverage
+Dockerfile
+.dockerignore

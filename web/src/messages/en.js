@@ -5,17 +5,17 @@ const english = {
   },
   seo: {
     keywords:
-      'big five personality test, big 5 personality test, b5 test, bigfive test, personality traits, bigfive, compare, free, jordan peterson'
+      'Marit personality test, Marit personality test, M test, Marit test, personality traits, Marit, compare, free, jordan peterson'
   },
   frontpage: {
     seo: {
-      title: 'Free open-source BigFive personality traits test',
+      title: 'Free open-source Marit personality traits test',
       description:
-        'Take a free, open-source Big Five personality test. Learn to know your personality traits and compare yourself with your partner, colleagues, friends or family.'
+        'Take a free, open-source Marit personality test. Learn to know your personality traits and compare yourself with your partner, colleagues, friends or family.'
     },
-    title: 'Big Five Personality Test',
-    call_to_action: 'Take the free test now',
-    no_registration: '* No registration required',
+    title: 'Marit Personality Test',
+    call_to_action: 'Start',
+    no_registration: '* This test is 100% anonymous and takes about 10 minutes to complete.',
     // do not translate <green>, {n}, and </green> tags
     tests_taken: 'Over <green>{n}</green> people have taken the test',
     compare: {
@@ -26,33 +26,15 @@ const english = {
       action: 'See it live in action'
     },
     share: 'Share with your friends and find out how compatible you are',
-    cards: {
-      open: {
-        title: 'Open',
-        text: 'This is an open source project under MIT-license.'
-      },
-      free: {
-        title: 'Free',
-        text: 'The test is completely free'
-      },
-      scientific: {
-        title: 'Scientific',
-        text: 'BigFive is a scientifically validated and reliable psychological model.'
-      },
-      translated: {
-        title: 'Translated',
-        text: 'Translated to over 20 languages. Help out on <a href="https://b5.translations.alheimsins.net/" rel="noreferrer" target="blank">this translation page</a>!'
-      }
-    },
     description: {
-      top: 'Learn to know yourself better with a <violet>free</violet>, open-source personality test.',
+      top: 'How do you see <violet>Marit</violet>?',
       subtop: 'The',
       subtop2:
         ' is the most scientifically validated and reliable psychological model to measure personality.',
       reference: `Tests and evaluation for this site is gathered from
 <a href="http://ipip.ori.org" rel="noopener" target="_blank">ipip.ori.org</a>,
 inventory is from <i>Johnson's (2014) 120-item IPIP NEO-PI-R</i>.`,
-      info: 'The following test contains 120 questions which is estimated to take you about 10 minutes to complete.',
+      info: 'In this questionaire you answer from your perspective of Marit.',
       result:
         'After you have completed the test you will receive a detailed personality report in the following domains:',
       tests_taken: 'tests taken so far'
@@ -67,14 +49,11 @@ inventory is from <i>Johnson's (2014) 120-item IPIP NEO-PI-R</i>.`,
   },
   toolbar: {
     home: 'Home',
+    start_test: 'Start Test',
     result: 'Result',
     compare: 'Compare',
-    articles: 'Articles',
-    privacy: 'Privacy',
-    about: 'About',
     see_results: 'See your results',
     compare_with: 'Compare with others',
-    faq: 'FAQ'
   },
   facets: {
     openness_to_experience: {
@@ -127,7 +106,7 @@ inventory is from <i>Johnson's (2014) 120-item IPIP NEO-PI-R</i>.`,
     next: 'next',
     back: 'back',
     more: 'more',
-    seeResults: 'see results'
+    seeResults: 'Send results'
   },
   big_five: {
     title: 'What are the big five?',
@@ -176,7 +155,7 @@ inventory is from <i>Johnson's (2014) 120-item IPIP NEO-PI-R</i>.`,
   getCompare: {
     title: 'Compare people or teams',
     description1:
-      'Compare results from the bigfive personality test with multiple people.',
+      'Compare results from the Marit personality test with multiple people.',
     description2: 'Type in the ID you got from the test results i.e.',
     description3: 'in the ID-input field',
     needToAddPeople: 'You need to add people to compare them',
@@ -195,7 +174,7 @@ inventory is from <i>Johnson's (2014) 120-item IPIP NEO-PI-R</i>.`,
     compare: 'compare',
     toOthers: 'yourself to others',
     seo: {
-      title: 'My results from the BigFive personality test',
+      title: 'My results from the Marit personality test',
       description:
         'See my personality and compare yourself in the following five domains: Neuroticism, Openness To Experience, Conscientiousness, Extraversion, Agreeableness'
     }
@@ -215,6 +194,12 @@ inventory is from <i>Johnson's (2014) 120-item IPIP NEO-PI-R</i>.`,
     shareTwitter: 'Share on Twitter',
     copiedLink: 'Copied link',
     shareResults: 'Share your results!'
+  },
+  thankyou: {
+    title: 'Thank you!',
+    subtitle: 'Your test is complete',
+    message: 'Thank you for taking the Marit personality test!',
+    description: 'Your results have been saved and will be used to create your personal presentation.'
   }
 };
 

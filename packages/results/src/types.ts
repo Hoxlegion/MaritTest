@@ -38,9 +38,6 @@ export interface DomainInput {
 
 export type Scores = Record<string, DomainInput>;
 
-// export type Template = Record<string, Domain>;
-
-
 export interface ResultOptions {
   language: LanguageCode;
   scores: Scores;

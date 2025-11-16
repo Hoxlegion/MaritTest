@@ -152,9 +152,9 @@ export const Survey = ({
     });
     localStorage.removeItem('inProgress');
     localStorage.removeItem('b5data');
-    console.log(result);
-    localStorage.setItem('resultId', result.id);
-    router.push(`/result/${result.id}`);
+    console.log('Test submitted with ID:', result.id);
+    // Redirect to thank you page instead of showing results
+    router.push('/thankyou');
   }
 
   function dataInLocalStorage() {

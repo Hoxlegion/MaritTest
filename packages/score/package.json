@@ -1,12 +1,12 @@
 {
   "name": "@bigfive-org/score",
   "version": "1.0.1",
-  "description": "Calculate score for big five tests",
+  "description": "Calculate score for Marit tests",
   "files": [
     "build/src/"
   ],
   "keywords": [
-    "bigfive",
+    "Marit",
     "personality",
     "calculate score"
   ],

@@ -2,7 +2,7 @@
 
 import { connectToDatabase } from '@/db';
 import { ObjectId } from 'mongodb';
-import { B5Error, DbResult, Feedback } from '@/types';
+import { B5Error, DbResult, Feedback, Answer } from '@/types';
 import calculateScore from '@bigfive-org/score';
 import generateResult, {
   getInfo,
@@ -102,5 +102,48 @@ export async function saveFeedback(
       message: 'Error sending feedback!',
       type: 'error'
     };
+  }
+}
+
+export type AdminTestResult = {
+  id: string;
+  testId: string;
+  lang: string;
+  dateStamp: Date;
+  timeElapsed: number;
+  answers: Answer[];
+  invalid: boolean;
+};
+
+export async function getAllTestResults(password: string): Promise<AdminTestResult[]> {
+  'use server';
+  
+  // Simple password check - in production, use proper authentication
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+  if (password !== adminPassword) {
+    throw new Error('Unauthorized');
+  }
+
+  try {
+    const db = await connectToDatabase();
+    const collection = db.collection(collectionName);
+    const results = await collection
+      .find({})
+      .sort({ dateStamp: -1 })
+      .limit(100)
+      .toArray();
+
+    return results.map(result => ({
+      id: result._id.toString(),
+      testId: result.testId,
+      lang: result.lang,
+      dateStamp: result.dateStamp,
+      timeElapsed: result.timeElapsed,
+      answers: result.answers,
+      invalid: result.invalid
+    }));
+  } catch (error) {
+    console.error('Error fetching test results:', error);
+    throw new Error('Failed to fetch test results');
   }
 }

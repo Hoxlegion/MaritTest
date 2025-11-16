@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  # MongoDB database
+  mongodb:
+    image: mongo:7.0
+    container_name: bigfive-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongopassword123
+      MONGO_INITDB_DATABASE: bigfive
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - bigfive-network
+
+  # Next.js web application
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: bigfive-web
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - DB_URL=mongodb://root:mongopassword123@mongodb:27017/bigfive?authSource=admin
+      - DB_NAME=bigfive
+      - DB_COLLECTION=results
+      - ADMIN_PASSWORD=admin
+    depends_on:
+      - mongodb
+    networks:
+      - bigfive-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  bigfive-network:
+    driver: bridge
