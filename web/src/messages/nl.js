@@ -5,25 +5,25 @@ const dutch = {
   },
   seo: {
     keywords:
-      'Marit\'s persoonlijkheidstest, Marit\'s persoonlijkheidstest, M test, Marit test, persoonlijkheidseigenschappen, Marit, vergelijken, gratis'
+      'Marit\'s perceptietest, Marit\'s perceptietest, M test, Marit test, persoonlijkheidseigenschappen, Marit, vergelijken, gratis'
   },
   frontpage: {
     seo: {
-      title: 'Gratis open-source Marit persoonlijkheidstest',
+      title: 'Gratis open-source Marit perceptietest',
       description:
-        'Neem een gratis, open-source Marit persoonlijkheidstest. Leer je persoonlijkheidseigenschappen kennen.'
+        'Doe de Marit perceptietest en help haar broertje met zijn presentatie!'
     },
-    title: 'Marit Persoonlijkheidstest',
+    title: 'Marit Perceptietest',
     call_to_action: 'Neem nu de test',
     no_registration: '* Deze test is 100% annoniem en duurt ongeveer 10 minuten om te voltooien.',
     tests_taken: 'Meer dan <green>{n}</green> mensen hebben de test gedaan',
     compare: {
-      title: 'Vergelijk jezelf met anderen',
-      text1: 'Vergelijk jezelf met je partner, collega\'s, vrienden of familie.',
-      text2: 'Leer hoe je verschilt van andere mensen in de vijf domeinen:',
+      title: 'Vergelijk Marits vrienden met Marit',
+      text1: 'Vergelijk Marits vrienden met Marit.',
+      text2: 'Leer hoe percepties verschillen van andere mensen:',
       action: 'Zie het live in actie'
     },
-    share: 'Deel met je vrienden en ontdek hoe compatibel jullie zijn',
+    share: 'Deel met Marits vrienden en help haar broertje',
     description: {
       top: 'Hoe zie jij <violet>Marit</violet>?',
       info: 'In deze vragenlijst geef jij invulling in hoe jij Marit ziet.',

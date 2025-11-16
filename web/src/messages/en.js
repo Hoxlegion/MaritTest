@@ -5,15 +5,15 @@ const english = {
   },
   seo: {
     keywords:
-      'Marit personality test, Marit personality test, M test, Marit test, personality traits, Marit, compare, free, jordan peterson'
+      'Marit perception test, Marit perception test, M test, Marit test, personality traits, Marit, compare, free, jordan peterson'
   },
   frontpage: {
     seo: {
-      title: 'Free open-source Marit personality traits test',
+      title: 'Free anonymous Marit Perception test',
       description:
-        'Take a free, open-source Marit personality test. Learn to know your personality traits and compare yourself with your partner, colleagues, friends or family.'
+        'Take a free, open-source Marit perception test. How do you see Marit? How do Marits friends see Marit?',
     },
-    title: 'Marit Personality Test',
+    title: 'Marit Perception Test',
     call_to_action: 'Start',
     no_registration: '* This test is 100% anonymous and takes about 10 minutes to complete.',
     // do not translate <green>, {n}, and </green> tags
@@ -21,11 +21,11 @@ const english = {
     compare: {
       title: 'Compare yourself to others',
       text1:
-        'Compare yourself with your partner, colleagues, friends or family.',
-      text2: 'Learn how you differ from other people in the five domains:',
+        'Compare Marits friends and Marit.',
+      text2: 'Learn how perceptions differ from other people:',
       action: 'See it live in action'
     },
-    share: 'Share with your friends and find out how compatible you are',
+    share: 'Share with Marits friends',
     description: {
       top: 'How do you see <violet>Marit</violet>?',
       subtop: 'The',
@@ -36,15 +36,8 @@ const english = {
 inventory is from <i>Johnson's (2014) 120-item IPIP NEO-PI-R</i>.`,
       info: 'In this questionaire you answer from your perspective of Marit.',
       result:
-        'After you have completed the test you will receive a detailed personality report in the following domains:',
+        'After you have completed the test the results will be send to Marit\'s brother and will be used for his presentation on the 22nd of November.',
       tests_taken: 'tests taken so far'
-    }
-  },
-  about: {
-    seo: {
-      title: 'About and the big five team',
-      description:
-        'BigFive has a very active and engaged team that is constantly striving to push BigFive forward.'
     }
   },
   toolbar: {
