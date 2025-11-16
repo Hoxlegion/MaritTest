@@ -1,8 +1,11 @@
-import { getQuestionsWithCustomDutch } from '@/lib/custom-questions';
+import { getQuestionsWithCustom, getAvailableLanguages } from '@/lib/custom-questions';
 import { Survey } from './survey';
 import { useTranslations } from 'next-intl';
 import { saveTest } from '@/actions';
 import { unstable_setRequestLocale } from 'next-intl/server';
+import { TestLanguageSwitch } from './test-language-switch';
+
+const questionLanguages = getAvailableLanguages();
 
 interface Props {
   params: { locale: string };
@@ -14,12 +17,22 @@ export default function TestPage({
   searchParams: { lang }
 }: Props) {
   unstable_setRequestLocale(locale);
-  // Force Dutch language for the test questions
-  const language = 'nl';
-  const questions = getQuestionsWithCustomDutch(language);
+  
+  // Use the lang parameter or default to locale if it's supported, otherwise English
+  const language =
+    lang || (questionLanguages.some((l) => l.id === locale) ? locale : 'en');
+  
+  const questions = getQuestionsWithCustom(language);
   const t = useTranslations('test');
+  
   return (
     <>
+      <div className='flex'>
+        <TestLanguageSwitch
+          availableLanguages={questionLanguages}
+          language={language}
+        />
+      </div>
       <Survey
         questions={questions}
         nextText={t('next')}
