@@ -31,12 +31,6 @@ const nextConfig = {
   },
   // Disable source maps in production for security
   productionBrowserSourceMaps: false,
-  env: {
-    DB_URL: process.env.DB_URL,
-    DB_NAME: process.env.DB_NAME,
-    DB_COLLECTION: process.env.DB_COLLECTION,
-    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
-  }
 };
 
 export default withNextIntl(nextConfig);

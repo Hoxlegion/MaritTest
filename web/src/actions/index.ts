@@ -122,13 +122,22 @@ export async function loginAdmin(password: string): Promise<{ success: boolean; 
   
   const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
   
-  // Debug logging (remove in production)
-  console.log('Login attempt - password length:', password.length);
-  console.log('Expected password length:', adminPassword.length);
-  console.log('Password match:', password === adminPassword);
+  // Debug info - remove after testing
+  const debugInfo = {
+    inputLength: password.length,
+    expectedLength: adminPassword.length,
+    match: password === adminPassword,
+    inputFirstChar: password.charCodeAt(0),
+    expectedFirstChar: adminPassword.charCodeAt(0),
+    inputLastChar: password.charCodeAt(password.length - 1),
+    expectedLastChar: adminPassword.charCodeAt(adminPassword.length - 1)
+  };
   
   if (password !== adminPassword) {
-    return { success: false, error: 'Invalid password' };
+    return { 
+      success: false, 
+      error: `Invalid password. Debug: ${JSON.stringify(debugInfo)}` 
+    };
   }
   
   await createSession();
