@@ -116,45 +116,16 @@ export type AdminTestResult = {
   invalid: boolean;
 };
 
-export async function getAllTestResults(password: string): Promise<AdminTestResult[]> {
-  'use server';
-  
-  // Simple password check - in production, use proper authentication
-  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
-  if (password !== adminPassword) {
-    console.log(adminPassword, password);
-    throw new Error('Unauthorized');
-  }
-
-  try {
-    const db = await connectToDatabase();
-    const collection = db.collection(collectionName);
-    const results = await collection
-      .find({})
-      .sort({ dateStamp: -1 })
-      .limit(100)
-      .toArray();
-
-    return results.map(result => ({
-      id: result._id.toString(),
-      testId: result.testId,
-      lang: result.lang,
-      dateStamp: result.dateStamp,
-      timeElapsed: result.timeElapsed,
-      answers: result.answers,
-      invalid: result.invalid
-    }));
-  } catch (error) {
-    console.error('Error fetching test results:', error);
-    throw new Error('Failed to fetch test results');
-  }
-}
-
 // Authentication actions
 export async function loginAdmin(password: string): Promise<{ success: boolean; error?: string }> {
   'use server';
   
   const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+  
+  // Debug logging (remove in production)
+  console.log('Login attempt - password length:', password.length);
+  console.log('Expected password length:', adminPassword.length);
+  console.log('Password match:', password === adminPassword);
   
   if (password !== adminPassword) {
     return { success: false, error: 'Invalid password' };
