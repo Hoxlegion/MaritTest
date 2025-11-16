@@ -149,5 +149,3 @@ ports:
 ## Support
 
 Dit is een aangepaste versie voor persoonlijk gebruik. Voor vragen over de originele Big Five test, zie: https://github.com/rubynor/bigfive-web
-
-Veel plezier met je grappige presentatie! 🎉

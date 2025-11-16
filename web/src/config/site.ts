@@ -2,8 +2,8 @@ import { getTranslations } from 'next-intl/server';
 
 export type SiteConfig = typeof siteConfig;
 
-export const basePath = 'https://bigfive-test.com';
-export const supportEmail = 'bigfive-test@rubynor.com';
+export const basePath = 'https://maritperceptietest.up.railway.app';
+export const supportEmail = 'hoxlegion@gmail.com';
 
 export type Language = {
   code: string;
@@ -20,8 +20,8 @@ export const languages: Language[] = [
 export const locales = languages.map((lang) => lang.code) as string[];
 
 export const siteConfig = {
-  name: 'Big Five Personality Test',
-  creator: '@maccyber',
+  name: 'Hoe zie jij Marit Test',
+  creator: '@Timo',
   description:
     'Learn to know yourself better with a free, open-source personality test.',
   navItems: [

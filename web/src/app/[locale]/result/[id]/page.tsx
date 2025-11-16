@@ -2,15 +2,12 @@ import { Report, getTestResult } from '@/actions';
 import { Snippet } from '@nextui-org/snippet';
 import { useTranslations } from 'next-intl';
 import { title } from '@/components/primitives';
-import { DomainPage } from './domain';
-import { Domain } from '@bigfive-org/results';
 import { getTranslations } from 'next-intl/server';
 import { BarChart } from '@/components/bar-chart';
 import { Link } from '@/navigation';
 import { ReportLanguageSwitch } from './report-language-switch';
 import { Alert } from '@/components/alert';
 import { supportEmail } from '@/config/site';
-import ShareBar from '@/components/share-bar';
 import { DomainTabs } from './domain-tabs';
 import { Chip } from '@nextui-org/react';
 
@@ -93,9 +90,6 @@ const Results = ({ report, showExpanded }: ResultsProps) => {
         >
           {report.id}
         </Snippet>
-      </div>
-      <div className='flex mt-5 justify-end w-full gap-x-1 print:hidden'>
-        <ShareBar report={report} />
       </div>
       <div className='flex mt-10'>
         <h1 className={title()}>{t('theBigFive')}</h1>
