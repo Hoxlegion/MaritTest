@@ -10,7 +10,7 @@ services:
       - '27017:27017'
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: mongopassword123
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
       MONGO_INITDB_DATABASE: bigfive
     volumes:
       - mongodb_data:/data/db
@@ -28,10 +28,10 @@ services:
       - '3000:3000'
     environment:
       - NODE_ENV=production
-      - DB_URL=mongodb://root:mongopassword123@mongodb:27017/bigfive?authSource=admin
+      - DB_URL=mongodb://root:${MONGO_PASSWORD}@mongodb:27017/bigfive?authSource=admin
       - DB_NAME=bigfive
       - DB_COLLECTION=results
-      - ADMIN_PASSWORD=admin
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
     depends_on:
       - mongodb
     networks:
