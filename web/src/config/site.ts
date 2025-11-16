@@ -34,14 +34,6 @@ export const siteConfig = {
       label: 'start_test',
       href: '/test'
     },
-    // {
-    //   label: 'result',
-    //   href: '/result'
-    // },
-    // {
-    //   label: 'compare',
-    //   href: '/compare'
-    // },
   ],
   navMenuItems: [
     {
@@ -52,14 +44,6 @@ export const siteConfig = {
       label: 'start_test',
       href: '/test'
     },
-    // {
-    //   label: 'result',
-    //   href: '/result'
-    // },
-    // {
-    //   label: 'compare',
-    //   href: '/compare'
-    // },
   ],
   footerLinks: [
     {

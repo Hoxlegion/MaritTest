@@ -6,14 +6,11 @@ import { Navbar } from '@/components/navbar';
 import clsx from 'clsx';
 import Footer from '@/components/footer';
 import { ThemeProviderProps } from 'next-themes/dist/types';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import { basePath, getNavItems, locales, siteConfig } from '@/config/site';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
-import { Analytics } from '@vercel/analytics/react';
 import useTextDirection from '@/hooks/use-text-direction';
 import Script from 'next/script';
-import CookieBanner from '@/components/cookie-consent';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -26,7 +23,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'frontpage' });
   const s = await getTranslations({ locale, namespace: 'seo' });
-  const alternatesLang = locales.reduce((a, v) => ({ ...a, [v]: `/${v}` }), {});
   return {
     title: {
       default: t('seo.title'),
@@ -34,17 +30,13 @@ export async function generateMetadata({
     },
     description: t('seo.description'),
     keywords: s('keywords'),
-    authors: [{ name: 'Jonas Enge', url: 'https://bigfive-test.com' }],
+    authors: [{ name: 'Jonas Enge', url: `${basePath}` }],
     icons: {
       icon: '/favicon.ico',
       shortcut: '/favicon-16x16.png',
       apple: '/apple-touch-icon.png'
     },
-    metadataBase: new URL('https://bigfive-test.com'),
-    // alternates: {
-    //   canonical: '/',
-    //   languages: alternatesLang
-    // },
+    metadataBase: new URL(`${basePath}`),
     openGraph: {
       type: 'website',
       url: basePath,
@@ -85,7 +77,6 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  const gaId = process.env.NEXT_PUBLIC_ANALYTICS_ID || '';
   unstable_setRequestLocale(locale);
   const direction = useTextDirection(locale);
 
@@ -111,7 +102,6 @@ export default async function RootLayout({
             <Navbar navItems={navItems} navMenuItems={navMenuItems} />
             <main className='container mx-auto max-w-7xl pt-16 px-6 flex-grow'>
               {children}
-              <CookieBanner />
             </main>
             <Footer footerLinks={footerLinks} />
           </div>
@@ -120,9 +110,7 @@ export default async function RootLayout({
           src='https://bigfive-test.com/sw.js'
           strategy='beforeInteractive'
         />
-        <Analytics />
       </body>
-      <GoogleAnalytics gaId={gaId} />
     </html>
   );
 }
