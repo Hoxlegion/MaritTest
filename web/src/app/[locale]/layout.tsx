@@ -94,7 +94,12 @@ export default async function RootLayout({
       >
         <Providers
           themeProps={
-            { attribute: 'class', defaultTheme: 'light' } as ThemeProviderProps
+            { 
+              attribute: 'class', 
+              defaultTheme: 'light',
+              enableSystem: false,
+              disableTransitionOnChange: false
+            } as ThemeProviderProps
           }
         >
           <div className='relative flex flex-col h-screen'>
