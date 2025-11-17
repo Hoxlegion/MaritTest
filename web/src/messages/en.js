@@ -34,7 +34,7 @@ const english = {
       reference: `Tests and evaluation for this site is gathered from
 <a href="http://ipip.ori.org" rel="noopener" target="_blank">ipip.ori.org</a>,
 inventory is from <i>Johnson's (2014) 120-item IPIP NEO-PI-R</i>.`,
-      info: 'In this questionaire you answer from your perspective of Marit.',
+      info: 'In this questionnaire, you answer based on your own perspective of Marit.',
       result:
         'After you have completed the test the results will be send to Marit\'s brother and will be used for his presentation on the 22nd of November.',
       tests_taken: 'tests taken so far'
