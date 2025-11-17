@@ -14,8 +14,8 @@ const dutch = {
         'Doe de Marit perceptietest en help haar broertje met zijn presentatie!'
     },
     title: 'Marit Perceptietest',
-    call_to_action: 'Neem nu de test',
-    no_registration: '* Deze test is 100% annoniem en duurt ongeveer 10 minuten om te voltooien.',
+    call_to_action: 'Doe nu de test',
+    no_registration: '* Deze test is 100% anoniem en duurt ongeveer 10 minuten om te voltooien.',
     tests_taken: 'Meer dan <green>{n}</green> mensen hebben de test gedaan',
     compare: {
       title: 'Vergelijk Marits vrienden met Marit',
@@ -23,7 +23,7 @@ const dutch = {
       text2: 'Leer hoe percepties verschillen van andere mensen:',
       action: 'Zie het live in actie'
     },
-    share: 'Deel met Marits vrienden en help haar broertje',
+    share: 'Deel deze test met Marit haar vrienden.',
     description: {
       top: 'Hoe zie jij <violet>Marit</violet>?',
       info: 'In deze vragenlijst geef jij invulling in hoe jij Marit ziet.',

@@ -22,7 +22,6 @@ export default function AdminPage() {
   const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
 
   useEffect(() => {
-    // Only check auth once
     if (hasCheckedAuth) return;
     
     const checkAuth = async () => {
