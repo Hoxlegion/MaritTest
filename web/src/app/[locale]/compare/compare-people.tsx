@@ -17,6 +17,8 @@ import {
 } from '@/components/icons';
 import { Button } from '@nextui-org/button';
 import { Input } from '@nextui-org/input';
+import { Card, CardBody, CardHeader } from '@nextui-org/card';
+import { AdminTestResult } from '@/actions';
 import React, { useState } from 'react';
 import { base64url, formatId, validId } from '@/lib/helpers';
 import { useRouter } from '@/navigation';
@@ -33,12 +35,14 @@ interface CompareProps {
   addPersonText: string;
   comparePeopleText: string;
   paramId?: string;
+  availableResults: AdminTestResult[];
 }
 
 export const ComparePeople = ({
   addPersonText,
   comparePeopleText,
-  paramId
+  paramId,
+  availableResults
 }: CompareProps) => {
   const router = useRouter();
   const columns = [
@@ -68,6 +72,17 @@ export const ComparePeople = ({
   const [editId, setEditId] = useState<string>('');
   const [editIndex, setEditIndex] = useState<number>();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const formatDate = (dateStamp: any) => {
+    const date = new Date(dateStamp);
+    return date.toLocaleDateString('nl-NL', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
 
   const isInvalidId = React.useMemo(() => {
     if (id === '') return false;
@@ -131,6 +146,51 @@ export const ComparePeople = ({
 
   return (
     <div className='w-full flex flex-col gap-4 mt-4'>
+      {availableResults.length > 0 && (
+        <Card className='mb-6'>
+          <CardHeader>
+            <h3 className='text-lg font-semibold'>
+              Beschikbare Test Resultaten ({availableResults.length})
+            </h3>
+          </CardHeader>
+          <CardBody>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 max-h-60 overflow-y-auto'>
+              {availableResults.map((result) => (
+                <div
+                  key={result.id}
+                  className='flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-800 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700'
+                  onClick={() => {
+                    const newId = result.id;
+                    if (!rows.some((item) => item.id === newId)) {
+                      setRows([...rows, { id: newId, name: `Test ${result.id.slice(-8)}` }]);
+                    }
+                  }}
+                >
+                  <div className='flex flex-col'>
+                    <span className='font-mono text-xs'>{result.id.slice(-8)}</span>
+                    <span className='text-xs text-gray-500'>{formatDate(result.dateStamp)}</span>
+                  </div>
+                  <Button
+                    size='sm'
+                    color='primary'
+                    variant='flat'
+                    isDisabled={rows.some((item) => item.id === result.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const newId = result.id;
+                      if (!rows.some((item) => item.id === newId)) {
+                        setRows([...rows, { id: newId, name: `Test ${result.id.slice(-8)}` }]);
+                      }
+                    }}
+                  >
+                    {rows.some((item) => item.id === result.id) ? '✓' : '+'}
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </CardBody>
+        </Card>
+      )}
       <div className='flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4 items-start'>
         <Input
           type='text'

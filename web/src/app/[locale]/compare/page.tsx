@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { ComparePeople } from './compare-people';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { Suspense } from 'react';
-import { checkAdminAuth } from '@/actions';
+import { checkAdminAuth, getAllTestResultsProtected } from '@/actions';
 import { redirect } from 'next/navigation';
 
 interface Props {
@@ -23,6 +23,9 @@ export default async function ComparePage({
     redirect('/admin');
   }
 
+  // Get all test results
+  const allResults = await getAllTestResultsProtected();
+
   const t = await getTranslations('getCompare');
   return (
     <div className='h-[calc(60vh)]'>
@@ -35,6 +38,7 @@ export default async function ComparePage({
           addPersonText={t('addPerson')}
           comparePeopleText={t('comparePeople')}
           paramId={id}
+          availableResults={allResults}
         />
       </Suspense>
     </div>
