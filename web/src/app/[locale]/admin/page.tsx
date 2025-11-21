@@ -5,7 +5,7 @@ import { Button } from '@nextui-org/button';
 import { Input } from '@nextui-org/input';
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@nextui-org/table';
-import { getAllTestResultsProtected, AdminTestResult, getTestResult, loginAdmin, logoutAdmin, checkAdminAuth } from '@/actions';
+import { getAllTestResultsProtected, AdminTestResult, getTestResult, loginAdmin, logoutAdmin, checkAdminAuth, createAverageTestResult } from '@/actions';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/modal';
 import calculateScore from '@bigfive-org/score';
 import { Chip } from '@nextui-org/react';
@@ -124,6 +124,22 @@ export default function AdminPage() {
     return colors[result] || 'default';
   };
 
+  const handleCreateAverage = async () => {
+    try {
+      setLoading(true);
+      const result = await createAverageTestResult();
+      alert('Gemiddelde test succesvol aangemaakt! ID: ' + result.id);
+      // Refresh the results
+      const updatedResults = await getAllTestResultsProtected();
+      setResults(updatedResults);
+    } catch (error) {
+      console.error('Error creating average:', error);
+      alert('Fout bij het maken van gemiddelde test');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-8">
@@ -163,6 +179,13 @@ export default function AdminPage() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Test Resultaten Admin</h1>
         <div className="flex gap-2">
+          <Button 
+            onClick={handleCreateAverage}
+            className="ml-4"
+            disabled={loading}
+          >
+            Maak Gemiddelde Test
+          </Button>
           <Button 
             as={Link}
             href="/compare"

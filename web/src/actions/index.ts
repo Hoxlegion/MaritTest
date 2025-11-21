@@ -13,6 +13,7 @@ import { createSession, verifySession, clearSession } from '@/lib/auth';
 
 const collectionName = process.env.DB_COLLECTION || 'results';
 const resultLanguages = getInfo().languages;
+const EXCLUDED_TEST_ID = '692051c011b9eb4a2d013adf'; // Change this to the actual testId you want to exclude
 
 export type Report = {
   id: string;
@@ -122,22 +123,8 @@ export async function loginAdmin(password: string): Promise<{ success: boolean; 
   
   const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
   
-  // Debug info - remove after testing
-  const debugInfo = {
-    inputLength: password.length,
-    expectedLength: adminPassword.length,
-    match: password === adminPassword,
-    inputFirstChar: password.charCodeAt(0),
-    expectedFirstChar: adminPassword.charCodeAt(0),
-    inputLastChar: password.charCodeAt(password.length - 1),
-    expectedLastChar: adminPassword.charCodeAt(adminPassword.length - 1)
-  };
-  
   if (password !== adminPassword) {
-    return { 
-      success: false, 
-      error: `Invalid password. Debug: ${JSON.stringify(debugInfo)}` 
-    };
+    return { success: false, error: 'Invalid password' };
   }
   
   await createSession();
@@ -179,5 +166,85 @@ export async function getAllTestResultsProtected(): Promise<AdminTestResult[]> {
   } catch (error) {
     console.error('Error fetching test results:', error);
     throw new Error('Failed to fetch test results');
+  }
+}
+
+export async function createAverageTestResult(): Promise<{ id: string }> {
+  'use server';
+  
+  const isAuthenticated = await verifySession();
+  if (!isAuthenticated) {
+    throw new Error('Unauthorized');
+  }
+  
+  try {
+    const db = await connectToDatabase();
+    const collection = db.collection(collectionName);
+    
+    // Get all results except the excluded one
+    const results = await collection.find({ 
+      _id: { $ne: new ObjectId(EXCLUDED_TEST_ID) } 
+    }).toArray();
+    
+    if (results.length === 0) {
+      throw new Error('No test results found to average');
+    }
+    
+    // Use the first test as template (to preserve question order and IDs)
+    const templateTest = results[0];
+    const numberOfTests = results.length;
+    
+    // Create a map to sum up scores by answer ID
+    const scoresByAnswerId = new Map<string, number>();
+    
+    // Sum up all scores for each answer ID
+    results.forEach(result => {
+      result.answers.forEach((answer: any) => {
+        const currentSum = scoresByAnswerId.get(answer.id) || 0;
+        scoresByAnswerId.set(answer.id, currentSum + answer.score);
+      });
+    });
+    
+    // Create averaged answers using the template structure
+    const averagedAnswers: Answer[] = templateTest.answers.map((templateAnswer: any) => {
+      const totalScore = scoresByAnswerId.get(templateAnswer.id) || 0;
+      const averageScore = Math.round(totalScore / numberOfTests);
+      
+      return {
+        id: templateAnswer.id,
+        domain: templateAnswer.domain,
+        facet: templateAnswer.facet,
+        score: averageScore
+      };
+    });
+    
+    // Create the average test result
+    const averageTestResult: DbResult = {
+      testId: 'average-result',
+      lang: templateTest.lang || 'nl',
+      dateStamp: new Date().toISOString(),
+      timeElapsed: -1, // Special marker for average result
+      answers: averagedAnswers,
+      invalid: false
+    };
+    
+    // Check if average result already exists
+    const existingAverage = await collection.findOne({ testId: 'average-result' });
+    
+    if (existingAverage) {
+      // Update existing average
+      await collection.updateOne(
+        { testId: 'average-result' },
+        { $set: averageTestResult }
+      );
+      return { id: existingAverage._id.toString() };
+    } else {
+      // Insert new average
+      const result = await collection.insertOne(averageTestResult);
+      return { id: result.insertedId.toString() };
+    }
+  } catch (error) {
+    console.error('Error creating average test result:', error);
+    throw new Error('Failed to create average test result');
   }
 }
