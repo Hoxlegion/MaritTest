@@ -169,6 +169,31 @@ export async function getAllTestResultsProtected(): Promise<AdminTestResult[]> {
   }
 }
 
+export async function getTestAnswers(id: string): Promise<Answer[]> {
+  'use server';
+  
+  const isAuthenticated = await verifySession();
+  if (!isAuthenticated) {
+    throw new Error('Unauthorized');
+  }
+  
+  try {
+    const query = { _id: new ObjectId(id) };
+    const db = await connectToDatabase();
+    const collection = db.collection(collectionName);
+    const report = await collection.findOne(query);
+    
+    if (!report) {
+      throw new Error(`Test result with id ${id} not found`);
+    }
+    
+    return report.answers;
+  } catch (error) {
+    console.error('Error fetching test answers:', error);
+    throw new Error('Failed to fetch test answers');
+  }
+}
+
 export async function createAverageTestResult(): Promise<{ id: string }> {
   'use server';
   
