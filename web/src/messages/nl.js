@@ -157,6 +157,12 @@ const dutch = {
     urlOrId: 'URL of ID voor vergelijking',
     name: 'Naam'
   },
+  getAnalyze: {
+    title: 'Analyseer Antwoorden',
+    description1: 'Selecteer meerdere profielen om de antwoorden per vraag naast elkaar te bekijken.',
+    addPerson: 'Voeg profiel toe',
+    analyzeText: 'Analyseer Antwoorden'
+  },
   results: {
     theBigFive: 'De Big Five',
     score: 'score',

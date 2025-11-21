@@ -180,6 +180,14 @@ export default function AdminPage() {
         <h1 className="text-3xl font-bold">Test Resultaten Admin</h1>
         <div className="flex gap-2">
           <Button 
+            as={Link}
+            href="/analyze"
+            color="secondary" 
+            variant="flat"
+          >
+            Anayseer
+          </Button>
+          <Button 
             onClick={handleCreateAverage}
             className="ml-4"
             disabled={loading}
