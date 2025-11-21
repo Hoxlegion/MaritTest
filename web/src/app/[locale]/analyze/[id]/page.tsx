@@ -1,4 +1,4 @@
-import { getTestResult, checkAdminAuth } from '@/actions';
+import { getTestResult, checkAdminAuth, Report } from '@/actions';
 import { redirect } from 'next/navigation';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { AnalyzeView } from './analyze-view';
@@ -35,7 +35,7 @@ export default async function AnalyzeResultsPage({
     );
 
     // Filter out any undefined results
-    const validResults = results.filter((r) => r !== undefined);
+    const validResults = results.filter((r): r is Report => r !== undefined);
 
     if (validResults.length < 2) {
       redirect('/analyze');
